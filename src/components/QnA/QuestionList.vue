@@ -2,7 +2,7 @@
   <b-container class="bv-example-row mt-3">
     <b-row class="mb-1">
       <b-col class="text-right">
-        <b-button variant="outline-primary" @click="moveWrite()"
+        <b-button variant="outline-primary" @click="registQuestion"
           >글쓰기</b-button
         >
       </b-col>
@@ -45,6 +45,11 @@ export default {
     this.$store.dispatch(Constant.GET_QNAS);
   },
   methods: {
+    registQuestion() {
+      this.$router.push({
+        name: "QuestionRegist",
+      });
+    },
     viewQuestion(question) {
       this.$router.push({
         name: "QuestionDetail",

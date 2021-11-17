@@ -129,7 +129,7 @@ export default {
         })
         .catch(() => alert("등록 처리 중 문제가 발생했습니다."));
     },
-    modifyArticle() {
+    modifyQuestion() {
       this.$store
         .dispatch(Constant.MODIFY_QUESTION, {
           qnaId: this.qnaId,

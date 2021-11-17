@@ -21,26 +21,22 @@ const routes = [
     redirect: "/qna/list",
     children: [
       {
-        path: "/list",
+        path: "list",
         name: "QuestionList",
         component: QuestionList,
       },
       {
-        path: "/register",
+        path: "register",
         name: "QuestionRegist",
         component: QuestionRegist,
       },
       {
-        path: "/modify",
+        path: "modify/:quaId",
         name: "QuestionModify",
         component: QuestionModify,
       },
       {
-<<<<<<< HEAD
-        path: "/detail",
-=======
         path: "detail/:qnaId",
->>>>>>> 43108be9c37943a9ca1952f2a1150a096067ad2b
         name: "QuestionDetail",
         component: QuestionDetail,
       },
