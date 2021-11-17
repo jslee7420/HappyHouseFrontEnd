@@ -36,7 +36,11 @@ const routes = [
         component: QuestionModify,
       },
       {
+<<<<<<< HEAD
         path: "/detail",
+=======
+        path: "detail/:qnaId",
+>>>>>>> 43108be9c37943a9ca1952f2a1150a096067ad2b
         name: "QuestionDetail",
         component: QuestionDetail,
       },

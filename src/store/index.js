@@ -11,11 +11,11 @@ export default new Vuex.Store({
     qna: {},
   },
   mutations: {
-    SET_QUESTION_LIST(state, questions) {
+    [Constant.SET_QNAS](state, questions) {
       state.questions = questions;
     },
-    [Constant.SET_QUESTION](state, payload) {
-      state.qna = payload;
+    [Constant.SET_QNA](state, qna) {
+      state.qna = qna;
     },
   },
   actions: {
@@ -44,10 +44,15 @@ export default new Vuex.Store({
         })
         .then(() => context.dispatch(Constant.GET_QNAS));
     },
-    getQuestions({ commit }) {
+    [Constant.GET_QNAS]({ commit }) {
       http.get("/qna").then((response) => {
         // console.log(data);
-        commit("SET_QUESTION_LIST", response.data);
+        commit(Constant.SET_QNAS, response.data);
+      });
+    },
+    [Constant.GET_QNA]({ commit }, payload) {
+      http.get("/qna/" + payload).then((response) => {
+        commit(Constant.SET_QNA, response.data);
       });
     },
   },
