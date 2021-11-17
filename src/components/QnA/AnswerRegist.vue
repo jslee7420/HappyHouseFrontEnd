@@ -1,16 +1,16 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <h2>질문 수정</h2>
-    <question-regist-form type="modify" />
+    <h2>답변 등록</h2>
+    <answer-regist-form type="regist" />
   </b-container>
 </template>
 
 <script>
-import QuestionRegistForm from "./child/QuestionRegistForm.vue";
+import AnswerRegistForm from "./child/AnswerRegistForm.vue";
 
 export default {
   components: {
-    QuestionRegistForm,
+    AnswerRegistForm,
   },
 };
 </script>

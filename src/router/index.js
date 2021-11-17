@@ -31,7 +31,7 @@ const routes = [
         component: QuestionRegist,
       },
       {
-        path: "modify",
+        path: "modify/:quaId",
         name: "QuestionModify",
         component: QuestionModify,
       },

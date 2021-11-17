@@ -1,11 +1,18 @@
 <template>
-  <div>
+  <b-container class="bv-example-row mt-3">
     <h2>답변 수정</h2>
-  </div>
+    <answer-regist-form type="modify" />
+  </b-container>
 </template>
 
 <script>
-export default {};
+import AnswerRegistForm from "./child/AnswerRegistForm.vue";
+
+export default {
+  components: {
+    AnswerRegistForm,
+  },
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
