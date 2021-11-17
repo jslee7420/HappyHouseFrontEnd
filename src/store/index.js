@@ -37,6 +37,7 @@ export default new Vuex.Store({
     [Constant.MODIFY_QUESTION](context, payload) {
       return http
         .put(`/qna/${payload.qnaId}`, {
+          qnaId: payload.qnaId,
           questionAuthor: payload.questionAuthor,
           questionTitle: payload.questionTitle,
           questionContent: payload.questionContent,

@@ -99,7 +99,7 @@ export default {
         })
         .then(() => {
           alert("답변 등록이 완료되었습니다.");
-          this.moveList();
+          this.$router.go();
         })
         .catch(() => alert("등록 처리 중 문제가 발생했습니다."));
     },
@@ -112,7 +112,7 @@ export default {
         })
         .then(() => {
           alert("답변 수정이 완료되었습니다.");
-          this.moveList();
+          this.$router.go();
         })
         .catch(() => alert("수정 처리 중 문제가 발생했습니다."));
     },

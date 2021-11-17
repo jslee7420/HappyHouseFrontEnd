@@ -97,9 +97,7 @@ export default {
     },
   },
   created() {
-    this.$store
-      .dispatch(Constant.GET_QNA, this.$route.params.qnaId)
-      .then(console.log);
+    this.$store.dispatch(Constant.GET_QNA, this.$route.params.qnaId);
   },
   methods: {
     listQnA() {
@@ -126,7 +124,7 @@ export default {
     deleteAnswer() {
       this.$store.dispatch(Constant.REMOVE_ANSWER, this.qna.qnaId).then(() => {
         alert("삭제가 완료되었습니다.");
-        this.$router.push({ name: "QuestionList" });
+        this.$router.go();
       });
     },
   },
