@@ -55,11 +55,6 @@ export default new Vuex.Store({
         commit(Constant.SET_QNA, response.data);
       });
     },
-    [Constant.GET_QNA]({ dispatch }, payload) {
-      return http
-        .delete(`/qna/${payload.qnaId}`)
-        .then(() => dispatch(Constant.GET_QNAS));
-    }
   },
   modules: {},
 });
