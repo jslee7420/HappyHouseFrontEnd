@@ -40,6 +40,8 @@
           <b-form-textarea
             id="questionContent"
             v-model="question.questionContent"
+            type="text"
+            required
             placeholder="내용 입력..."
             rows="10"
             max-rows="15"
@@ -62,14 +64,14 @@
 </template>
 
 <script>
-// import http from "@/util/http-common.js";
+import Constant from "@/util/Constant.js";
 
 export default {
   name: "QuestionRegistForm",
   data() {
     return {
       question: {
-        questionId: 0,
+        qnaId: "",
         questionAuthor: "",
         questionTitle: "",
         questionContent: "",
@@ -81,14 +83,10 @@ export default {
   },
   created() {
     if (this.type === "modify") {
-      // http.get(`/board/${this.$route.params.articleno}`).then(({ data }) => {
-      //   // this.article.articleno = data.article.articleno;
-      //   // this.article.userid = data.article.userid;
-      //   // this.article.subject = data.article.subject;
-      //   // this.article.content = data.article.content;
-      //   this.article = data;
-      // });
-      // this.isUserid = true;
+      this.qnaId = this.$store.state.qna.qnaId;
+      this.questionAuthor = this.$store.state.qna.questionAuthor;
+      this.questionTitle = this.$store.state.qna.questionTitle;
+      this.questionContent = this.$store.state.qna.questionContent;
     }
   },
   methods: {
@@ -97,58 +95,53 @@ export default {
 
       let err = true;
       let msg = "";
-      !this.article.userid &&
-        ((msg = "작성자 입력해주세요"),
+      !this.question.questionAuthor &&
+        ((msg = "작성자를 입력해주세요"),
         (err = false),
-        this.$refs.userid.focus());
+        this.$refs.questionAuthor.focus());
       err &&
-        !this.article.subject &&
-        ((msg = "제목 입력해주세요"),
+        !this.question.questionTitle &&
+        ((msg = "제목을 입력해주세요"),
         (err = false),
-        this.$refs.subject.focus());
+        this.$refs.questionTitle.focus());
       err &&
-        !this.article.content &&
-        ((msg = "내용 입력해주세요"),
+        !this.question.questionContent &&
+        ((msg = "내용을 입력해주세요"),
         (err = false),
-        this.$refs.content.focus());
+        this.$refs.questionContent.focus());
 
       if (!err) alert(msg);
       else
-        this.type === "register" ? this.registArticle() : this.modifyArticle();
+        this.type === "register"
+          ? this.registQuestion()
+          : this.modifyQuestion();
     },
-    registArticle() {
-      // http
-      //   .post(`/board`, {
-      //     userid: this.article.userid,
-      //     subject: this.article.subject,
-      //     content: this.article.content,
-      //   })
-      //   .then(({ data }) => {
-      //     let msg = "등록 처리시 문제가 발생했습니다.";
-      //     if (data === "success") {
-      //       msg = "등록이 완료되었습니다.";
-      //     }
-      //     alert(msg);
-      //     this.moveList();
-      //   });
+    registQuestion() {
+      this.$store
+        .dispatch(Constant.REGIST_QUESTION, {
+          questionAuthor: this.question.questionAuthor,
+          questionTitle: this.question.questionTitle,
+          questionContent: this.question.questionContent,
+        })
+        .then(() => {
+          alert("등록이 완료되었습니다.");
+          this.moveList();
+        })
+        .catch(() => alert("등록 처리 중 문제가 발생했습니다."));
     },
     modifyArticle() {
-      // http
-      //   .put(`/board`, {
-      //     articleno: this.article.articleno,
-      //     userid: this.article.userid,
-      //     subject: this.article.subject,
-      //     content: this.article.content,
-      //   })
-      //   .then(({ data }) => {
-      //     let msg = "수정 처리시 문제가 발생했습니다.";
-      //     if (data === "success") {
-      //       msg = "수정이 완료되었습니다.";
-      //     }
-      //     alert(msg);
-      //     // 현재 route를 /list로 변경.
-      //     this.$router.push({ name: "BoardList" });
-      //   });
+      this.$store
+        .dispatch(Constant.MODIFY_QUESTION, {
+          qnaId: this.qnaId,
+          questionAuthor: this.question.questionAuthor,
+          questionTitle: this.question.questionTitle,
+          questionContent: this.question.questionContent,
+        })
+        .then(() => {
+          alert("수정이 완료되었습니다.");
+          this.moveList();
+        })
+        .catch(() => alert("수정 처리 중 문제가 발생했습니다."));
     },
     moveList() {
       this.$router.push({ name: "QuestionList" });
