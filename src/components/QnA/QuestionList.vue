@@ -14,7 +14,7 @@
           hover
           :items="questions"
           :fields="fields"
-          @row-clicked="viewArticle"
+          @row-clicked="viewQuestion"
         >
         </b-table>
       </b-col>
@@ -23,40 +23,35 @@
 </template>
 
 <script>
+import Constant from "@/util/Constant.js";
+
 export default {
   data() {
     return {
-      questions: [
-        {
-          questionId: "1",
-          questionTitle: "회원가입은 어떻게 하나요?",
-          questionAuthor: "이정수",
-          questionCreatedTime: "2021.11.17",
-          answerAuthor: "운영자",
-        },
-        {
-          questionId: "2",
-          questionTitle: "회원탈퇴는 어떻게 하나요?",
-          questionAuthor: "박상일",
-          questionCreatedTime: "2021.11.17",
-        },
-      ],
       fields: [
-        { key: "questionId", label: "글번호", tdClass: "tdClass" },
+        { key: "qnaId", label: "글번호", tdClass: "tdClass" },
         { key: "questionTitle", label: "제목", tdClass: "tdSubject" },
         { key: "questionAuthor", label: "작성자", tdClass: "tdClass" },
         { key: "questionCreatedTime", label: "작성일", tdClass: "tdClass" },
       ],
     };
   },
-  // computed: {
-  //   questions() {
-  //     return this.$store.state.questions;
-  //   },
-  // },
-  // created() {
-  //   this.$store.dispatch.getQuestions();
-  // },
+  computed: {
+    questions() {
+      return this.$store.state.questions;
+    },
+  },
+  created() {
+    this.$store.dispatch(Constant.GET_QNAS);
+  },
+  methods: {
+    viewQuestion(question) {
+      this.$router.push({
+        name: "QuestionDetail",
+        params: { qnaId: question.qnaId },
+      });
+    },
+  },
 };
 </script>
 
@@ -66,7 +61,7 @@ export default {
   text-align: center;
 }
 .tdSubject {
-  width: 300px;
+  width: 500px;
   text-align: left;
 }
 </style>
