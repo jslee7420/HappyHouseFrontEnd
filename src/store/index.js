@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     questions: [],
     qna: {},
+    answer: {},
   },
   mutations: {
     [Constant.SET_QNAS](state, questions) {
@@ -29,6 +30,21 @@ export default new Vuex.Store({
       http.get("/qna/" + payload).then((response) => {
         commit(Constant.SET_QNA, response.data);
       });
+    },
+    [Constant.REMOVE_QUESTION](context, payload) {
+      http.delete("/qna/" + payload).then(() => {
+        context.dispatch(Constant.GET_QNAS);
+      });
+    },
+    [Constant.REGIST_ANSWER](context, payload) {
+      http
+        .post("/qna/" + payload, {
+          answerAuthor: answer.answerAuthor,
+          answerContent: answer.answerContent,
+        })
+        .then(() => {
+          context.dispatch(Constant.GET_QNA);
+        });
     },
   },
   modules: {},

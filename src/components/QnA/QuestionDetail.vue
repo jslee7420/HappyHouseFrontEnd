@@ -21,33 +21,62 @@
       <b-row class="mb-1">
         <b-col>
           <b-card
-            :header-html="`<h3>${qna.qnaId}.
-          ${qna.questionTitle}</h3><div><h6>${qna.userid}</div><div>${article.regtime}</h6></div>`"
+            :header-html="`<h3>
+          ${qna.questionTitle}</h3><div><h6>${qna.questionAuthor}</div><div>${qna.questionCreatedTime}</h6></div>`"
             class="mb-2"
             border-variant="dark"
             no-body
           >
             <b-card-body class="text-left">
-              <div v-html="message"></div>
+              <div v-html="questionContent"></div>
             </b-card-body>
           </b-card>
         </b-col>
       </b-row>
+      <b-row v-if="qna.answerAuthor !== undefined" class="mb-1">
+        <b-col>
+          <b-card
+            :header-html="`<h3>
+          답변</h3><div><h6>${qna.answerAuthor}</div><div>${qna.answerCreatedTime}</h6></div>`"
+            class="mb-2"
+            border-variant="dark"
+            no-body
+          >
+            <b-card-body class="text-left">
+              <div v-html="answerContent"></div>
+            </b-card-body>
+          </b-card>
+        </b-col>
+      </b-row>
+      <answer-regist-form type="register" />
     </b-container>
   </div>
 </template>
 
 <script>
 import Constant from "@/util/Constant.js";
+import AnswerRegistForm from "@/components/QnA/child/AnswerRegistForm";
 
 export default {
   computed: {
     qna() {
       return this.$store.state.qna;
     },
+    questionContent() {
+      if (this.qna.questionContent)
+        return this.qna.questionContent.split("\n").join("<br>");
+      return "";
+    },
+    answerContent() {
+      if (this.qna.answerContent)
+        return this.qna.answerContent.split("\n").join("<br>");
+      return "";
+    },
   },
   created() {
-    this.$store.dispatch(Constant.GET_QNA, this.$route.params.qnaId);
+    this.$store
+      .dispatch(Constant.GET_QNA, this.$route.params.qnaId)
+      .then(console.log);
   },
   methods: {
     listQnA() {
@@ -56,9 +85,18 @@ export default {
     moveModifyQuestion() {
       this.$router.push({ name: "QuestionModify" });
     },
-    deletQuestion() {
+    deleteQuestion() {
       console.log("deleteQuestion called");
+      this.$store
+        .dispatch(Constant.REMOVE_QUESTION, this.qna.qnaId)
+        .then(() => {
+          alert("삭제가 완료되었습니다.");
+          this.$router.push({ name: "QuestionList" });
+        });
     },
+  },
+  components: {
+    AnswerRegistForm,
   },
 };
 </script>
