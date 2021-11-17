@@ -61,12 +61,27 @@ export default new Vuex.Store({
     },
     [Constant.REGIST_ANSWER](context, payload) {
       http
-        .post("/qna/" + payload, {
-          answerAuthor: answer.answerAuthor,
-          answerContent: answer.answerContent,
+        .post("/qna/" + payload.qnaId + "/ans", {
+          answerAuthor: payload.answerAuthor,
+          answerContent: payload.answerContent,
         })
         .then(() => {
-          context.dispatch(Constant.GET_QNA);
+          context.dispatch(Constant.GET_QNA, payload.qnaId);
+        });
+    },
+    [Constant.REMOVE_ANSWER](context, payload) {
+      http.delete("/qna/" + payload + "/ans").then(() => {
+        context.dispatch(Constant.GET_QNAS);
+      });
+    },
+    [Constant.MODIFY_ANSWER](context, payload) {
+      return http
+        .put("/qna/" + payload.qnaId + "/ans", {
+          answerAuthor: payload.answerAuthor,
+          answerContent: payload.answerContent,
+        })
+        .then(() => {
+          context.dispatch(Constant.GET_QNA, payload.qnaId);
         });
     },
   },

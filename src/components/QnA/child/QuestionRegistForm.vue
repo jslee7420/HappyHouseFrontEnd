@@ -27,7 +27,7 @@
             id="questionTitle"
             v-model="question.questionTitle"
             type="text"
-            required
+            ref="questionTitle"
             placeholder="제목 입력..."
           ></b-form-input>
         </b-form-group>
@@ -83,10 +83,10 @@ export default {
   },
   created() {
     if (this.type === "modify") {
-      this.qnaId = this.$store.state.qna.qnaId;
-      this.questionAuthor = this.$store.state.qna.questionAuthor;
-      this.questionTitle = this.$store.state.qna.questionTitle;
-      this.questionContent = this.$store.state.qna.questionContent;
+      this.question.qnaId = this.$store.state.qna.qnaId;
+      this.question.questionAuthor = this.$store.state.qna.questionAuthor;
+      this.question.questionTitle = this.$store.state.qna.questionTitle;
+      this.question.questionContent = this.$store.state.qna.questionContent;
     }
   },
   methods: {
@@ -132,7 +132,7 @@ export default {
     modifyQuestion() {
       this.$store
         .dispatch(Constant.MODIFY_QUESTION, {
-          qnaId: this.qnaId,
+          qnaId: this.question.qnaId,
           questionAuthor: this.question.questionAuthor,
           questionTitle: this.question.questionTitle,
           questionContent: this.question.questionContent,
