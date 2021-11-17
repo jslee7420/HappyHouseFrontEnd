@@ -1,23 +1,46 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import QnA from "@/views/QnA.vue";
+import QuestionList from "@/components/QnA/QuestionList.vue";
+import QuestionRegist from "@/components/QnA/QuestionRegist.vue";
+import QuestionModify from "@/components/QnA/QuestionModify.vue";
+import QuestionDetail from "@/components/QnA/QuestionDetail.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  // {
+  //   path: "/",
+  //   name: "Home",
+  //   component: Home,
+  // },
   {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/qna",
+    name: "Q&A",
+    component: QnA,
+    redirect: "/qna/list",
+    children: [
+      {
+        path: "list",
+        name: "QuestionList",
+        component: QuestionList,
+      },
+      {
+        path: "register",
+        name: "QuestionRegist",
+        component: QuestionRegist,
+      },
+      {
+        path: "modify",
+        name: "QuestionModify",
+        component: QuestionModify,
+      },
+      {
+        path: "detail",
+        name: "QuestionDetail",
+        component: QuestionDetail,
+      },
+    ],
   },
 ];
 
