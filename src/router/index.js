@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import QnA from "@/views/QnA.vue";
 import Home from "@/views/Home.vue";
+import House from "@/views/House.vue";
 import QuestionList from "@/components/QnA/QuestionList.vue";
 import QuestionRegist from "@/components/QnA/QuestionRegist.vue";
 import QuestionModify from "@/components/QnA/QuestionModify.vue";
@@ -42,6 +43,11 @@ const routes = [
         component: QuestionDetail,
       },
     ],
+  },
+  {
+    path: "/house",
+    name: "House",
+    component: House,
   },
 ];
 
