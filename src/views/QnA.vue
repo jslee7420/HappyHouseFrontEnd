@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-jumbotron header="Q&A" lead=""> </b-jumbotron>
+    <b-jumbotron header="Q&A" lead="" bg-variant="info"> </b-jumbotron>
     <router-view></router-view>
   </div>
 </template>

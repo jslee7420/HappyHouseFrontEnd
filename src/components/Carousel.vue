@@ -16,13 +16,13 @@
         <h1>손쉬운 주택 실거래가 정보 조회</h1>
       </b-carousel-slide>
       <b-carousel-slide :img-src="require('@/assets/img/house2.jpg')">
-        <h1>손쉬운 주택 실거래가 정보 조회</h1>
+        <h1>아파트부터 오피스텔까지 다양한 주택 형태</h1>
       </b-carousel-slide>
       <b-carousel-slide :img-src="require('@/assets/img/house3.jpg')">
-        <h1>손쉬운 주택 실거래가 정보 조회</h1>
+        <h1>간편한 관심 주택 비교</h1>
       </b-carousel-slide>
       <b-carousel-slide :img-src="require('@/assets/img/house4.jpg')">
-        <h1>손쉬운 주택 실거래가 정보 조회</h1>
+        <h1>주변정보까지 손쉽게!</h1>
       </b-carousel-slide>
     </b-carousel>
   </div>

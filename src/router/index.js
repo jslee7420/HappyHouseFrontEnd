@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import QnA from "@/views/QnA.vue";
 import Home from "@/views/Home.vue";
+import House from "@/views/House.vue";
 
 import User from "@/views/User.vue";
 import UserLogin from "@/components/user/UserLogin.vue";
@@ -60,6 +61,11 @@ const routes = [
         component: QuestionDetail,
       },
     ],
+  },
+  {
+    path: "/house",
+    name: "House",
+    component: House,
   },
 ];
 
