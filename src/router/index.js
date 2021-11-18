@@ -2,6 +2,12 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import QnA from "@/views/QnA.vue";
 import Home from "@/views/Home.vue";
+
+import User from "@/views/User.vue";
+import UserLogin from "@/components/user/UserLogin.vue";
+// import UserJoin from "@/components/user/UserJoin.vue";
+// import UserMyPage from "@/components/user/UserMyPage.vue";
+
 import QuestionList from "@/components/QnA/QuestionList.vue";
 import QuestionRegist from "@/components/QnA/QuestionRegist.vue";
 import QuestionModify from "@/components/QnA/QuestionModify.vue";
@@ -14,6 +20,18 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/user",
+    name: "User",
+    component: User,
+    children: [
+      {
+        path: "login",
+        name: "UserLogin",
+        component: UserLogin,
+      }
+    ]
   },
   {
     path: "/qna",

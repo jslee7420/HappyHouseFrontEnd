@@ -3,9 +3,14 @@ import Vuex from "vuex";
 import http from "@/util/http-common.js";
 import Constant from "@/util/Constant.js";
 
+import userStore from "@/store/modules/userStore.js";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  modules: {
+    userStore,
+  },
   state: {
     questions: [],
     qna: {},
@@ -86,5 +91,4 @@ export default new Vuex.Store({
         });
     },
   },
-  modules: {},
 });

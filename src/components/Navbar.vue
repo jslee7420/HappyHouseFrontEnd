@@ -29,15 +29,15 @@
           <b-nav-item href="#">Home</b-nav-item>
           <b-nav-item href="#">실거래가 조회</b-nav-item>
           <b-nav-item href="#">공지사항</b-nav-item>
-          <b-nav-item href="#">Q&A</b-nav-item>
+          <b-nav-item href="/qna">Q&A</b-nav-item>
 
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
               <em>계정</em>
             </template>
-            <b-dropdown-item href="#">로그인</b-dropdown-item>
-            <b-dropdown-item href="#">회원가입</b-dropdown-item>
+            <b-dropdown-item href="/user/login">로그인</b-dropdown-item>
+            <b-dropdown-item href="/user/join">회원가입</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
