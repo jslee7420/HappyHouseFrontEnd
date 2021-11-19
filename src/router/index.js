@@ -6,8 +6,8 @@ import House from "@/views/House.vue";
 
 import User from "@/views/User.vue";
 import UserLogin from "@/components/user/UserLogin.vue";
-// import UserJoin from "@/components/user/UserJoin.vue";
-// import UserMyPage from "@/components/user/UserMyPage.vue";
+import UserJoin from "@/components/user/UserJoin.vue";
+import UserProfile from "@/components/user/UserProfile.vue";
 
 import QuestionList from "@/components/QnA/QuestionList.vue";
 import QuestionRegist from "@/components/QnA/QuestionRegist.vue";
@@ -31,6 +31,16 @@ const routes = [
         path: "login",
         name: "UserLogin",
         component: UserLogin,
+      },
+      {
+        path: "join",
+        name: "UserJoin",
+        component: UserJoin,
+      },
+      {
+        path: "profile",
+        name: "UserProfile",
+        component: UserProfile
       }
     ]
   },

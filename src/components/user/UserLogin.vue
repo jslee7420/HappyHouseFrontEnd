@@ -83,7 +83,7 @@ export default {
       }
     },
     movePage() {
-      this.$router.push({ name: "SignUp" });
+      this.$router.push({ name: "UserJoin" });
     },
   },
 };

@@ -1,12 +1,14 @@
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 import { login } from "@/api/user.js";
-import { findById } from "@/api/user.js";
+import { join } from "@/api/user.js";
+import { idCheck } from "@/api/user.js";
 
 const userStore = {
   namespaced: true,
   state: {
     isLogin: false,
     isLoginError: false,
+    isIdDuplication: false,
     userInfo: null,
   },
   getters: {
@@ -25,6 +27,9 @@ const userStore = {
       state.isLogin = true;
       state.userInfo = userInfo;
     },
+    SET_IS_ID_DUPLICATION: (state, isIdDuplication) => {
+      state.isIdDuplication = isIdDuplication;
+    }
   },
   actions: {
     async userConfirm({ commit }, user) {
@@ -38,29 +43,31 @@ const userStore = {
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_USER_INFO", response.data.userInfo);
             sessionStorage.setItem("access-token", token);
-          } else {
-            commit("SET_IS_LOGIN", false);
-            commit("SET_IS_LOGIN_ERROR", true);
           }
         },
-        () => { }
-      );
-    },
-    getUserInfo({ commit }, token) {
-      let decode_token = jwt_decode(token);
-      findById(
-        decode_token.userid,
-        (response) => {
-          if (response.data.message === "success") {
-            commit("SET_USER_INFO", response.data.userInfo);
-          } else {
-            console.log("유저 정보 없음!!");
-          }
-        },
-        (error) => {
-          console.log(error);
+        () => {
+          commit("SET_IS_LOGIN", false);
+          commit("SET_IS_LOGIN_ERROR", true);
         }
       );
+    },
+    async userRegist({ commit }, user) {
+      await join(
+        user,
+        () => { commit },
+        () => { }
+      )
+    },
+    async userIdCheck({ commit }, id) {
+      await idCheck(
+        id,
+        () => {
+          commit("SET_IS_ID_DUPLICATION", false)
+        },
+        () => {
+          commit("SET_IS_ID_DUPLICATION", true)
+        }
+      )
     },
   },
 };
