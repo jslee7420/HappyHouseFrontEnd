@@ -2,17 +2,17 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import QnA from "@/views/QnA.vue";
 import Home from "@/views/Home.vue";
-import House from "@/views/House.vue";
+import House from "@/views/HouseDeal.vue";
 
 import User from "@/views/User.vue";
 import UserLogin from "@/components/user/UserLogin.vue";
 // import UserJoin from "@/components/user/UserJoin.vue";
 // import UserMyPage from "@/components/user/UserMyPage.vue";
 
-import QuestionList from "@/components/QnA/QuestionList.vue";
-import QuestionRegist from "@/components/QnA/QuestionRegist.vue";
-import QuestionModify from "@/components/QnA/QuestionModify.vue";
-import QuestionDetail from "@/components/QnA/QuestionDetail.vue";
+import QuestionList from "@/components/qna/QuestionList.vue";
+import QuestionRegist from "@/components/qna/QuestionRegist.vue";
+import QuestionModify from "@/components/qna/QuestionModify.vue";
+import QuestionDetail from "@/components/qna/QuestionDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -31,8 +31,8 @@ const routes = [
         path: "login",
         name: "UserLogin",
         component: UserLogin,
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/qna",

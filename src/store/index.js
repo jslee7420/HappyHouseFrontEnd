@@ -4,12 +4,16 @@ import http from "@/util/http-common.js";
 import Constant from "@/util/Constant.js";
 
 import userStore from "@/store/modules/userStore.js";
+import addressStore from "@/store/modules/addressStore.js";
+import houseStore from "@/store/modules/houseStore.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     userStore,
+    addressStore,
+    houseStore,
   },
   state: {
     questions: [],
