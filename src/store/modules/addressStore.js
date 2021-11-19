@@ -46,6 +46,7 @@ const addressStore = {
       );
     },
     getGugun: ({ commit }, sidoCode) => {
+      commit("CLEAR_DONG_LIST");
       gugunList(
         sidoCode,
         ({ data }) => {

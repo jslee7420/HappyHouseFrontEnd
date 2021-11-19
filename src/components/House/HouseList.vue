@@ -1,34 +1,25 @@
 <template>
-  <div class="side_bar">
+  <div class="side_bar border-right float-left">
     <div class="font-weight-bold p-2">전체 주택 {{ houses.length }}개</div>
-    <b-card-group>
-      <b-card class="overflow-hidden">
-        <b-row no-gutters>
-          <b-col md="5">
-            <b-card-img
-              :src="require('@/assets/img/apartment.jpg')"
-              class="fit"
-            ></b-card-img>
-          </b-col>
-          <b-col md="7" class="text-left">
-            <b-card-body title="e편한 세상" sub-title="경기도 성남시 분당구">
-              <b-card-text>
-                준공일: 2010.10 <br /><span class="font-weight-bold"
-                  >최근 거래액: <span class="h4">10억</span></span
-                >
-              </b-card-text>
-            </b-card-body>
-          </b-col>
-        </b-row>
-      </b-card>
-    </b-card-group>
+    <b-list-group class="list">
+      <house-list-row
+        v-for="(house, index) of houses"
+        :key="index"
+        v-bind="house"
+      ></house-list-row>
+    </b-list-group>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import HouseListRow from "@/components/house/HouseListRow.vue";
+
 const houseStore = "houseStore";
 export default {
+  components: {
+    HouseListRow,
+  },
   computed: {
     ...mapState(houseStore, ["houses"]),
   },
@@ -38,13 +29,11 @@ export default {
 <style scoped>
 .side_bar {
   width: 450px;
-
-  overflow: scroll;
-  overflow-x: hidden;
 }
 
-.fit {
-  width: 100%;
-  height: 100%;
+.list {
+  height: calc(100vh - 150px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>
