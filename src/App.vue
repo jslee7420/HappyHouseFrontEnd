@@ -1,16 +1,22 @@
 <template>
   <div id="app">
-    <navbar></navbar>
-    <router-view />
+    <div class="content">
+      <navbar></navbar>
+      <router-view />
+    </div>
+
+    <footer-comp></footer-comp>
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
+import Navbar from "@/components/layout/Navbar.vue";
+import FooterComp from "@/components/layout/Footer.vue";
 
 export default {
   components: {
     Navbar,
+    FooterComp,
   },
 };
 </script>
@@ -35,5 +41,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.content {
+  min-height: 100vh;
 }
 </style>

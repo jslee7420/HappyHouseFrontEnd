@@ -73,7 +73,7 @@
 
 <script>
 import Constant from "@/util/Constant.js";
-import AnswerRegistForm from "@/components/QnA/child/AnswerRegistForm";
+import AnswerRegistForm from "@/components/qna/child/AnswerRegistForm";
 
 export default {
   data() {
