@@ -1,7 +1,5 @@
 // import jwt_decode from "jwt-decode";
-import { login } from "@/api/user.js";
-import { join } from "@/api/user.js";
-import { idCheck } from "@/api/user.js";
+import { login, join, idCheck, modify, remove } from "@/api/user.js";
 
 const userStore = {
   namespaced: true,
@@ -46,7 +44,7 @@ const userStore = {
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_USER_INFO", response.data.userInfo);
-            sessionStorage.setItem("access-token", token);
+            localStorage.setItem("access-token", token);
           }
         },
         () => {
@@ -75,7 +73,30 @@ const userStore = {
     },
     userLogout({ commit }) {
       commit("SET_IS_LOGOUT", true);
-      sessionStorage.removeItem("access-token");
+      localStorage.removeItem("access-token");
+    },
+    userUpdate({ commit }, user) {
+      modify(
+        user,
+        (response) => {
+          commit("SET_USER_INFO", response.data.userInfo);
+        },
+        () => { },
+      )
+    },
+    userDelete({ commit }, id) {
+      remove(
+        id,
+        () => {
+          commit("SET_IS_LOGOUT", true);
+          localStorage.removeItem("access-token");
+        },
+        () => { },
+      )
+    },
+    initializeLoginState({ commit }) {
+      commit("SET_IS_LOGIN_ERROR", false);
+      commit("SET_IS_ID_DUPLICATION", false);
     }
   },
 };

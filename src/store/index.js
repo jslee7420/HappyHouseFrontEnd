@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from 'vuex-persistedstate';
+
 import http from "@/util/http-common.js";
 import Constant from "@/util/Constant.js";
 
@@ -95,4 +97,7 @@ export default new Vuex.Store({
         });
     },
   },
+  plugins: [
+    createPersistedState(),
+  ]
 });

@@ -15,12 +15,12 @@ async function idCheck(id, success, fail) {
 }
 
 async function modify(user, success, fail) {
-  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  api.defaults.headers["access-token"] = localStorage.getItem("access-token");
   api.put(`/user/${user.userId}`, JSON.stringify(user)).then(success).catch(fail);
 }
 
 function remove(id, success, fail) {
-  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  api.defaults.headers["access-token"] = localStorage.getItem("access-token");
   api.delete(`/user/${id}`).then(success).catch(fail);
 }
 
