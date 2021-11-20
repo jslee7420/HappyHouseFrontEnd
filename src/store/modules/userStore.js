@@ -29,7 +29,11 @@ const userStore = {
     },
     SET_IS_ID_DUPLICATION: (state, isIdDuplication) => {
       state.isIdDuplication = isIdDuplication;
-    }
+    },
+    SET_IS_LOGOUT: (state, isLogout) => {
+      state.isLogin = !isLogout;
+      state.userInfo = null;
+    },
   },
   actions: {
     async userConfirm({ commit }, user) {
@@ -69,9 +73,8 @@ const userStore = {
         }
       )
     },
-    userLogout() {
-      this.isLogin = false;
-      this.userInfo = false;
+    userLogout({ commit }) {
+      commit("SET_IS_LOGOUT", true);
       sessionStorage.removeItem("access-token");
     }
   },

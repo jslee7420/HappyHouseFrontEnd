@@ -38,11 +38,11 @@
             <b-nav-item :to="{ name: 'QuestionList' }">Q&A</b-nav-item>
 
             <div>
-              <div v-if="isLogin">
+              <div v-if="!isLogin">
                 <b-nav-item :to="{ name: 'UserLogin' }">로그인</b-nav-item>
                 <b-nav-item :to="{ name: 'UserJoin' }">회원가입</b-nav-item>
               </div>
-              <div>
+              <div v-else>
                 <b-nav-item :to="{ name: 'UserProfile' }"
                   >마이 페이지</b-nav-item
                 >

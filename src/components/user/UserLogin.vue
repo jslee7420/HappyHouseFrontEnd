@@ -76,9 +76,7 @@ export default {
     ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
     async confirm() {
       await this.userConfirm(this.user);
-      let token = sessionStorage.getItem("access-token");
       if (this.isLogin) {
-        await this.getUserInfo(token);
         this.$router.push({ name: "Home" });
       }
     },
