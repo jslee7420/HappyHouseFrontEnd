@@ -37,18 +37,18 @@
             <b-nav-item href="#">공지사항</b-nav-item>
             <b-nav-item :to="{ name: 'QuestionList' }">Q&A</b-nav-item>
 
-            <b-nav-item-dropdown right>
-              <!-- Using 'button-content' slot -->
-              <template #button-content>
-                <em>계정</em>
-              </template>
-              <b-dropdown-item :to="{ name: 'UserLogin' }"
-                >로그인</b-dropdown-item
-              >
-              <b-dropdown-item :to="{ name: 'UserJoin' }"
-                >회원가입</b-dropdown-item
-              >
-            </b-nav-item-dropdown>
+            <div>
+              <div v-if="isLogin">
+                <b-nav-item :to="{ name: 'UserLogin' }">로그인</b-nav-item>
+                <b-nav-item :to="{ name: 'UserJoin' }">회원가입</b-nav-item>
+              </div>
+              <div>
+                <b-nav-item :to="{ name: 'UserProfile' }"
+                  >마이 페이지</b-nav-item
+                >
+                <b-nav-item @click="userLogout">로그아웃</b-nav-item>
+              </div>
+            </div>
           </b-navbar-nav>
         </b-collapse>
       </div>
@@ -57,7 +57,18 @@
 </template>
 
 <script>
-export default {};
+import { mapState, mapActions } from "vuex";
+
+const userStore = "userStore";
+
+export default {
+  computed: {
+    ...mapState(userStore, ["isLogin"]),
+  },
+  methods: {
+    ...mapActions(userStore, ["userLogout"]),
+  },
+};
 </script>
 
 <style scoped>

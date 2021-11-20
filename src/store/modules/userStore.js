@@ -69,6 +69,11 @@ const userStore = {
         }
       )
     },
+    userLogout() {
+      this.isLogin = false;
+      this.userInfo = false;
+      sessionStorage.removeItem("access-token");
+    }
   },
 };
 
