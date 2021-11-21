@@ -4,7 +4,6 @@ const houseStore = {
   namespaced: true,
   state: {
     houses: [],
-    housedeals: [],
   },
   getters: {},
   mutations: {
@@ -14,7 +13,7 @@ const houseStore = {
   },
   actions: {
     getHouses({ commit }, dongCode) {
-      houseList(
+      return houseList(
         dongCode,
         (data) => {
           commit("SET_HOUSE_LIST", data.data);

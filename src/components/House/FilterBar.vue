@@ -58,8 +58,9 @@ export default {
     },
     onSubmit() {
       if (this.dongCode)
-        this.$store.dispatch("houseStore/getHouses", this.dongCode);
-      console.log(this.$store.state.houseStore.houses);
+        this.$store.dispatch("houseStore/getHouses", this.dongCode).then(() => {
+          this.$root.$emit("updateMap");
+        });
     },
   },
 };
