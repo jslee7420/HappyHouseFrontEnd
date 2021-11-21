@@ -1,8 +1,10 @@
 <template>
-  <div id="houseDeal">
+  <div>
     <filter-bar></filter-bar>
-    <house-list></house-list>
-    <map-comp></map-comp>
+    <div class="d-flex">
+      <house-list></house-list>
+      <map-comp></map-comp>
+    </div>
   </div>
 </template>
 
@@ -21,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-#houseDeal {
+#clear {
   content: "";
 
   clear: both;
