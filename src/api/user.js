@@ -24,4 +24,19 @@ function userRemove(id, success, fail) {
   api.delete(`/user/${id}`).then(success).catch(fail);
 }
 
-export { userLogin, userJoin, userIdCheck, userModify, userRemove };
+async function bookmarkList(id, success, fail) {
+  api.defaults.headers["access-token"] = localStorage.getItem("access-token");
+  await api.get(`/user/${id}/bookmark`).then(success).catch(fail);
+}
+
+async function bookmarkAdd(bookmark, success, fail) {
+  api.defaults.headers["access-token"] = localStorage.getItem("access-token");
+  await api.get(`/user/${bookmark.userId}/bookmark`, JSON.stringify(bookmark)).then(success).catch(fail);
+}
+
+async function bookmarkRemove(bookmark, success, fail) {
+  api.defaults.headers["access-token"] = localStorage.getItem("access-token");
+  await api.get(`/user/${bookmark.userId}/bookmark`, JSON.stringify(bookmark)).then(success).catch(fail);
+}
+
+export { userLogin, userJoin, userIdCheck, userModify, userRemove, bookmarkList, bookmarkAdd, bookmarkRemove };

@@ -1,5 +1,5 @@
 // import jwt_decode from "jwt-decode";
-import { userLogin, userJoin, userIdCheck, userModify, userRemove } from "@/api/user.js";
+import { userLogin, userJoin, userIdCheck, userModify, userRemove, bookmarkList, bookmarkAdd, bookmarkRemove } from "@/api/user.js";
 
 const userStore = {
   namespaced: true,
@@ -8,6 +8,7 @@ const userStore = {
     isLoginError: false,
     isIdDuplication: false,
     userInfo: null,
+    bookmakrList: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -31,6 +32,9 @@ const userStore = {
     SET_IS_LOGOUT: (state, isLogout) => {
       state.isLogin = !isLogout;
       state.userInfo = null;
+    },
+    SET_BOOKMARK_LIST: (state, bookmakrList) => {
+      state.bookmakrList = bookmakrList;
     },
   },
   actions: {
@@ -104,6 +108,36 @@ const userStore = {
         () => { },
       )
     },
+    async bookmarkList({ commit }, id) {
+      await bookmarkList(
+        id,
+        (response) => {
+          commit("SET_BOOKMARK_LIST", response.data.bookmarks)
+        },
+        () => { },
+      )
+    },
+    async bookmarkAdd({ commit }, bookmark) {
+      await bookmarkAdd(
+        bookmark,
+        () => {
+          commit,
+            console.log("북마크 추가");
+        },
+        () => { },
+      )
+    },
+    async bookmarkDelete({ commit }, bookmark) {
+      await bookmarkRemove(
+        bookmark,
+        () => {
+          commit,
+            console.log("북마크 삭제");
+        },
+        () => { },
+      )
+    },
+
     initializeState({ commit }) {
       commit("SET_IS_LOGIN_ERROR", false);
       commit("SET_IS_ID_DUPLICATION", false);
