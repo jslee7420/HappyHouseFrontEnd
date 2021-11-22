@@ -1,5 +1,5 @@
 // import jwt_decode from "jwt-decode";
-import { login, join, idCheck, modify, remove } from "@/api/user.js";
+import { userLogin, userJoin, userIdCheck, userModify, userRemove } from "@/api/user.js";
 
 const userStore = {
   namespaced: true,
@@ -35,40 +35,46 @@ const userStore = {
   },
   actions: {
     async userConfirm({ commit }, user) {
-      await login(
+      await userLogin(
         user,
         (response) => {
           console.log(response.status);
-          if (response.status === 200) {
+          if (response.data.message === "success") {
             let token = response.data["access-token"];
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_USER_INFO", response.data.userInfo);
             localStorage.setItem("access-token", token);
+          } else {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
           }
         },
-        () => {
-          commit("SET_IS_LOGIN", false);
-          commit("SET_IS_LOGIN_ERROR", true);
-        }
+        () => { }
       );
     },
     async userRegist({ commit }, user) {
-      await join(
+      await userJoin(
         user,
-        () => { commit },
+        (response) => {
+          if (response.data.message === "success") {
+            commit
+          }
+        },
         () => { }
       )
     },
     async userIdCheck({ commit }, id) {
-      await idCheck(
+      await userIdCheck(
         id,
-        () => {
-          commit("SET_IS_ID_DUPLICATION", false)
+        (response) => {
+          if (response.data.message === "success") {
+            commit("SET_IS_ID_DUPLICATION", false)
+          } else {
+            commit("SET_IS_ID_DUPLICATION", true)
+          }
         },
-        () => {
-          commit("SET_IS_ID_DUPLICATION", true)
-        }
+        () => { }
       )
     },
     userLogout({ commit }) {
@@ -76,25 +82,29 @@ const userStore = {
       localStorage.removeItem("access-token");
     },
     userUpdate({ commit }, user) {
-      modify(
+      userModify(
         user,
         (response) => {
-          commit("SET_USER_INFO", response.data.userInfo);
+          if (response.data.message === "success") {
+            commit("SET_USER_INFO", response.data.userInfo);
+          }
         },
         () => { },
       )
     },
     userDelete({ commit }, id) {
-      remove(
+      userRemove(
         id,
-        () => {
-          commit("SET_IS_LOGOUT", true);
-          localStorage.removeItem("access-token");
+        (response) => {
+          if (response.data.message === "success") {
+            commit("SET_IS_LOGOUT", true);
+            localStorage.removeItem("access-token");
+          }
         },
         () => { },
       )
     },
-    initializeLoginState({ commit }) {
+    initializeState({ commit }) {
       commit("SET_IS_LOGIN_ERROR", false);
       commit("SET_IS_ID_DUPLICATION", false);
     }

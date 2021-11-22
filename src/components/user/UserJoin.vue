@@ -20,14 +20,14 @@
                 ref="userId"
               ></b-form-input>
               <div>
-                <span v-if="!user.userId"></span>
-                <span style="color: red" v-else-if="error.IdLenError">
+                <span v-if="user.userId.trim().length == 0"></span>
+                <span style="color: red" v-else-if="error.idLenError">
                   {{ error.errorMsg.idLength }}
                 </span>
-                <span style="color: red" v-else-if="isIdDuplication">
+                <span style="color: red" v-else-if="error.idDuplicationError">
                   {{ error.errorMsg.duplicatedId }}
                 </span>
-                <span style="color: green" v-else>
+                <span style="color: green" v-else-if="idConfirm">
                   {{ "사용 가능한 ID 입니다." }}
                 </span>
               </div>
@@ -117,16 +117,18 @@ export default {
   data() {
     return {
       pwdCheck: null,
+      idCheck: null,
+      idConfirm: false,
       user: {
-        userId: null,
-        userPw: null,
-        userName: null,
-        userAddress: null,
-        userTel: null,
+        userId: "",
+        userPw: "",
+        userName: "",
+        userAddress: "",
+        userTel: "",
       },
       error: {
-        IdLenError: false,
-        duplicatedIdError: false,
+        idLenError: false,
+        idDuplicationError: false,
         pwdValidError: false,
         errorMsg: {
           duplicatedId: "중복된 아이디 입니다.",
@@ -136,13 +138,36 @@ export default {
       },
     };
   },
+  created() {
+    this.initializeState();
+  },
+  beforeDestroy() {
+    this.initializeState();
+  },
   computed: {
     ...mapState(userStore, ["isIdDuplication"]),
   },
+  watch: {
+    user: {
+      deep: true,
+      handler(user) {
+        if (this.idCheck !== user.userId) {
+          this.idConfirm = false;
+        }
+      },
+    },
+  },
   methods: {
-    ...mapActions(userStore, ["userRegist", "userIdCheck"]),
+    ...mapActions(userStore, ["userRegist", "userIdCheck", "initializeState"]),
     async checkIdDuplication() {
-      await this.userIdCheck(this.user.userId);
+      if (!this.error.idLenError) {
+        await this.userIdCheck(this.user.userId);
+      }
+      this.error.idDuplicationError = this.isIdDuplication;
+      if (!this.error.idDuplicationError) {
+        this.idConfirm = true;
+        this.idCheck = this.user.userId;
+      }
     },
     async regist() {
       console.log(this.user);
@@ -150,26 +175,27 @@ export default {
       this.$router.push({ name: "UserLogin" });
     },
     checkIdLen() {
-      if (this.user.userId.length < 4 || this.user.userId.length > 16) {
-        this.error.IdLenError = true;
-      } else this.error.IdLenError = false;
+      if (
+        this.user.userId.trim().length < 4 ||
+        this.user.userId.trim().length > 16
+      ) {
+        this.error.idLenError = true;
+      } else this.error.idLenError = false;
     },
     checkPwd() {
       if (this.pwdCheck !== this.user.userPw) {
         this.error.pwdValidError = true;
       } else this.error.pwdValidError = false;
     },
-    // 입력값 체크하기 - 체크가 성공하면 registBook 호출
     checkValue() {
       // 사용자 입력값 체크하기
-      // isbn, 제목, 저자, 가격, 설명이 없을 경우 각 항목에 맞는 메세지를 출력
       let err = true;
       let msg = "";
       !this.user.userId && ((msg = "아이디를 입력해주세요"), (err = false));
-      this.isIdDuplication && ((msg = "중복된 ID입니다."), (err = false));
-      err &&
-        !this.user.userPw &&
-        ((msg = "비밀번호를 입력해주세요"), (err = false));
+      !this.idConfirm &&
+        ((msg = "사용 가능한 ID 인지 확인하세요."), (err = false));
+      this.error.pwdValidError &&
+        ((msg = "비밀번호를 확인하세요."), (err = false));
       err &&
         !this.user.userName &&
         ((msg = "이름을 입력해주세요"), (err = false));
@@ -181,7 +207,6 @@ export default {
         ((msg = "전화번호를 입력해주세요"), (err = false));
 
       if (!err) alert(msg);
-      // 만약, 내용이 다 입력되어 있다면 registBook 호출
       else this.regist();
     },
   },

@@ -118,8 +118,10 @@ export default {
   methods: {
     ...mapActions(userStore, ["userUpdate", "userDelete"]),
     async modify() {
-      await this.userUpdate(this.user);
-      this.movePage();
+      if (confirm("회원 정보를 현재 상태로 수정하시겠습니까?")) {
+        await this.userUpdate(this.user);
+        this.movePage();
+      }
     },
     async remove() {
       if (confirm("회원을 탈퇴하시겠습니까?")) {

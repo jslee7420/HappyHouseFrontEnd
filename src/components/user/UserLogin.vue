@@ -69,18 +69,11 @@ export default {
       },
     };
   },
-  created() {
-    this.initializeLoginState();
-  },
   computed: {
     ...mapState(userStore, ["isLogin", "isLoginError"]),
   },
   methods: {
-    ...mapActions(userStore, [
-      "userConfirm",
-      "getUserInfo",
-      "initializeLoginState",
-    ]),
+    ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
     async confirm() {
       await this.userConfirm(this.user);
       if (this.isLogin) {
