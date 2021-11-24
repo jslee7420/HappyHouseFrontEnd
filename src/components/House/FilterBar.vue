@@ -19,7 +19,12 @@
         :options="dongs"
       ></b-form-select>
 
-      <b-button type="submit" variant="primary">조회</b-button>
+      <b-button type="submit" variant="primary" class="mb-2 mr-sm-2 mb-sm-0"
+        >조회</b-button
+      >
+      <b-button @click="showBookmarkedHouses" class="mb-2 mr-sm-2 mb-sm-0"
+        >관심단지 모아보기</b-button
+      >
     </b-form>
   </div>
 </template>
@@ -62,6 +67,16 @@ export default {
           this.$root.$emit("updateMap");
           if (this.$router.currentRoute.name !== "HouseList")
             this.$router.push({ name: "HouseList" });
+        });
+    },
+    showBookmarkedHouses() {
+      this.$store
+        .dispatch(
+          "houseStore/getBookmarkedHouses",
+          this.$store.getters["userStore/checkUserInfo"].userId
+        )
+        .then(() => {
+          this.$root.$emit("updateMap");
         });
     },
   },

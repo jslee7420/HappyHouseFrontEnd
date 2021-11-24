@@ -137,7 +137,6 @@ const userStore = {
       );
     },
     async bookmarkDelete({ commit, dispatch }, bookmark) {
-      console.log("bookmarkDelete called");
       await bookmarkRemove(
         bookmark,
         () => {

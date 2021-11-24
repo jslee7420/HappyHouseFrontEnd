@@ -7,6 +7,20 @@
       ></router-link>
     </p>
 
+    <!--  -->
+    <house-list-row
+      class="mb-3"
+      :aptCode="houseInfo.aptCode"
+      :aptName="houseInfo.aptName"
+      :dongName="houseInfo.dongName"
+      :sidoName="houseInfo.sidoName"
+      :gugunName="houseInfo.gugunName"
+      :buildYear="houseInfo.buildYear"
+      :jibun="houseInfo.jibun"
+      :recentPrice="houseInfo.recentPrice"
+      :isDetail="true"
+    />
+
     <!-- 거래내역 -->
     <h4 class="font-weight-bold">거래내역</h4>
     <b-table striped hover :items="houseDeals" :fields="fields">
@@ -31,6 +45,7 @@
 
 <script>
 import { mapState } from "vuex";
+import HouseListRow from "@/components/house/HouseListRow.vue";
 
 const houseStore = "houseStore";
 export default {
@@ -47,7 +62,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["houseDeals"]),
+    ...mapState(houseStore, ["houseDeals", "houseInfo"]),
   },
   methods: {
     closeDetail() {
@@ -58,6 +73,9 @@ export default {
       if (new Date(a) > new Date(b)) return -1;
       return 0;
     },
+  },
+  components: {
+    HouseListRow,
   },
 };
 </script>

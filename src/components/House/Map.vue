@@ -455,6 +455,9 @@ export default {
 #category li.on .category_bg {
   background-position-x: -46px;
 }
+</style>
+
+<style>
 .placeinfo_wrap {
   position: absolute;
   bottom: 28px;
