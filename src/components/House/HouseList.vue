@@ -1,5 +1,5 @@
 <template>
-  <div class="side_bar border-right">
+  <div>
     <div class="font-weight-bold p-2">전체 주택 {{ houses.length }}개</div>
     <b-list-group class="list">
       <house-list-row
@@ -21,18 +21,15 @@ export default {
     HouseListRow,
   },
   computed: {
-    ...mapState(houseStore, ["houses"]),
+    ...mapState(houseStore, ["houses", "isList"]),
   },
 };
 </script>
 
 <style scoped>
-.side_bar {
-  min-width: 430px;
-}
-
 .list {
   height: calc(100vh - 150px);
+  width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }

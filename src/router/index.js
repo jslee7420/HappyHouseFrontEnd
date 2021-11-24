@@ -2,7 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import QnA from "@/views/QnA.vue";
 import Home from "@/views/Home.vue";
+
 import House from "@/views/HouseDeal.vue";
+import HouseList from "@/components/house/HouseList.vue";
+import HouseDetail from "@/components/house/HouseDetail.vue";
 
 import User from "@/views/User.vue";
 import UserLogin from "@/components/user/UserLogin.vue";
@@ -76,6 +79,19 @@ const routes = [
     path: "/house",
     name: "House",
     component: House,
+    redirect: "/house/list",
+    children: [
+      {
+        path: "list",
+        name: "HouseList",
+        component: HouseList,
+      },
+      {
+        path: "detail",
+        name: "HouseDetail",
+        component: HouseDetail,
+      },
+    ],
   },
 ];
 
