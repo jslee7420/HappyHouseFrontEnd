@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from 'vuex-persistedstate';
+import createPersistedState from "vuex-persistedstate";
 
 import http from "@/util/http-common.js";
 import Constant from "@/util/Constant.js";
@@ -8,6 +8,7 @@ import Constant from "@/util/Constant.js";
 import userStore from "@/store/modules/userStore.js";
 import addressStore from "@/store/modules/addressStore.js";
 import houseStore from "@/store/modules/houseStore.js";
+import newsStore from "@/store/modules/newsStore.js";
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     userStore,
     addressStore,
     houseStore,
+    newsStore,
   },
   state: {
     questions: [],
@@ -97,7 +99,5 @@ export default new Vuex.Store({
         });
     },
   },
-  plugins: [
-    createPersistedState(),
-  ]
+  plugins: [createPersistedState()],
 });

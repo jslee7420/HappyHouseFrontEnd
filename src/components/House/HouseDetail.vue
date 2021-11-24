@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 text-left">
+  <div class="p-3 text-left list">
     <!-- 닫기 버튼 -->
     <p class="text-right">
       <router-link :to="{ name: 'HouseList' }"
@@ -80,4 +80,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.list {
+  height: calc(100vh - 110px);
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+</style>

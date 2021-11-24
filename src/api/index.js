@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL, APT_DEAL_URL } from "@/config";
+import { API_BASE_URL, APT_DEAL_URL, NEWS_URL } from "@/config";
 
 // axios 객체 생성
 function apiInstance() {
@@ -22,4 +22,14 @@ function houseInstance() {
   return instance;
 }
 
-export { apiInstance, houseInstance };
+function newsInstance() {
+  const instance = axios.create({
+    baseURL: NEWS_URL,
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  return instance;
+}
+
+export { apiInstance, houseInstance, newsInstance };
