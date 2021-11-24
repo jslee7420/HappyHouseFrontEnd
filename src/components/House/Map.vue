@@ -87,14 +87,8 @@ export default {
     }
     // 조회시 맵 상태 업데이트 이벤트 리스너
     this.$root.$on("updateMap", () => {
-      // 위경도 배열 생성
-      let latLngs = [];
-      this.$store.state.houseStore.houses.forEach((house) => {
-        latLngs.push([house.lat, house.lng]);
-      });
-
       // 맵에 마커 표시
-      this.displayMarker(latLngs);
+      this.displayMarker(this.$store.state.houseStore.houses);
     });
   },
   methods: {
@@ -108,6 +102,7 @@ export default {
       };
 
       this.map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
       const markerPosition = new kakao.maps.LatLng(
         37.50133446272347,
         127.03967579316388
@@ -122,7 +117,28 @@ export default {
 
       marker.setMap(this.map); // 지도에 마커 표시
 
-      //////////////////////////////////////////////////////////////////////////////////////////////카테고리별 장소 검색
+      //카테고리별 장소 검색
+      this.initCaregoricalSearch();
+
+      // 지도 컨트롤 추가
+      this.initMapControll();
+    },
+
+    initMapControll() {
+      // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+      let mapTypeControl = new kakao.maps.MapTypeControl();
+
+      // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+      // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+      this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+      // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+      let zoomControl = new kakao.maps.ZoomControl();
+      this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    },
+
+    // 카테고리별 검색 초기화
+    initCaregoricalSearch() {
       // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
       this.placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 });
       // 장소 검색 객체를 생성합니다
@@ -148,48 +164,42 @@ export default {
 
       // 커스텀 오버레이 컨텐츠를 설정합니다
       this.placeOverlay.setContent(this.contentNode);
-
-      ////////////////////////////////////////////////////////////////////////////////////////////// 지도 컨트롤 추가
-      // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-      let mapTypeControl = new kakao.maps.MapTypeControl();
-
-      // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-      // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-      this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-      // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-      let zoomControl = new kakao.maps.ZoomControl();
-      this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
     },
 
     // 지도에 마커 표시
-    displayMarker(markerPositions) {
+    displayMarker(houses) {
       console.log("displayMarker Method called");
 
       if (this.markers.length > 0) {
         // 기존 마커 맵에서 삭제
         this.markers.forEach((marker) => marker.setMap(null));
       }
+      houses;
 
-      // 위경도 값 배열을 카카오맵 위경도 객체(WGS84 좌표 정보를 가지고 있는 객체)로 변경
-      const positions = markerPositions.map(
-        (position) => new kakao.maps.LatLng(...position)
-      );
-
-      if (positions.length > 0) {
+      if (houses.length > 0) {
         // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
         let bounds = new kakao.maps.LatLngBounds();
-
-        this.markers = positions.map((position) => {
+        for (let i = 0; i < houses.length; i++) {
+          let position = new kakao.maps.LatLng(houses[i].lat, houses[i].lng);
           // LatLngBounds 객체에 좌표를 추가합니다
           bounds.extend(position);
 
           // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-          return new kakao.maps.Marker({
+          let marker = new kakao.maps.Marker({
             map: this.map,
             position,
+            clickable: true,
           });
-        });
+          // 마커에 click 이벤트를 등록합니다
+          kakao.maps.event.addListener(marker, "click", () => {
+            this.$store
+              .dispatch("houseStore/getHouseDeals", houses[i].aptCode)
+              .then(() => {
+                if (this.$router.currentRoute.name !== "HouseDetail")
+                  this.$router.push({ name: "HouseDetail" });
+              });
+          });
+        }
 
         // LatLngBounds 객체에 좌표를 추가합니다
         this.map.setBounds(bounds);
@@ -248,9 +258,10 @@ export default {
 
         // 마커와 검색결과 항목을 클릭 했을 때
         // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
+        let vm = this;
         (function (marker, place) {
           kakao.maps.event.addListener(marker, "click", function () {
-            this.displayPlaceInfo(place);
+            vm.displayPlaceInfo(place);
           });
         })(marker, places[i]);
       }
@@ -291,6 +302,7 @@ export default {
 
     // 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
     displayPlaceInfo(place) {
+      console.log("displayPlaceInfo called");
       var content =
         '<div class="placeinfo">' +
         '   <a class="title" href="' +
@@ -365,7 +377,6 @@ export default {
 
 <style scoped>
 #map {
-  width: 100%;
   height: calc(100vh - 110px);
   position: relative;
   overflow: hidden;
@@ -380,7 +391,6 @@ export default {
 .map_wrap {
   position: relative;
   width: 100%;
-  height: 350px;
 }
 #category {
   position: absolute;

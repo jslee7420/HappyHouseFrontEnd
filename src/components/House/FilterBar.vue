@@ -60,6 +60,8 @@ export default {
       if (this.dongCode)
         this.$store.dispatch("houseStore/getHouses", this.dongCode).then(() => {
           this.$root.$emit("updateMap");
+          if (this.$router.currentRoute.name !== "HouseList")
+            this.$router.push({ name: "HouseList" });
         });
     },
   },

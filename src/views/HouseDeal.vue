@@ -1,31 +1,34 @@
 <template>
-  <div>
+  <div class="housedeal">
     <filter-bar></filter-bar>
     <div class="d-flex">
-      <house-list></house-list>
-      <map-comp></map-comp>
+      <div class="side border-right item">
+        <router-view />
+      </div>
+      <div class="map item">
+        <map-comp></map-comp>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import FilterBar from "@/components/house/FilterBar.vue";
-import HouseList from "@/components/house/HouseList.vue";
 import MapComp from "@/components/house/Map.vue";
 
 export default {
   components: {
     FilterBar,
-    HouseList,
     MapComp,
   },
 };
 </script>
 
 <style scoped>
-#clear {
-  content: "";
-
-  clear: both;
+.side {
+  width: 400px;
+}
+.map {
+  flex: 1;
 }
 </style>

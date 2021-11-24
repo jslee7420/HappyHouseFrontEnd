@@ -1,5 +1,14 @@
 // import jwt_decode from "jwt-decode";
-import { userLogin, userJoin, userIdCheck, userModify, userRemove, bookmarkList, bookmarkAdd, bookmarkRemove } from "@/api/user.js";
+import {
+  userLogin,
+  userJoin,
+  userIdCheck,
+  userModify,
+  userRemove,
+  bookmarkList,
+  bookmarkAdd,
+  bookmarkRemove,
+} from "@/api/user.js";
 
 const userStore = {
   namespaced: true,
@@ -54,7 +63,7 @@ const userStore = {
             commit("SET_IS_LOGIN_ERROR", true);
           }
         },
-        () => { }
+        () => {}
       );
     },
     async userRegist({ commit }, user) {
@@ -62,24 +71,24 @@ const userStore = {
         user,
         (response) => {
           if (response.data.message === "success") {
-            commit
+            commit;
           }
         },
-        () => { }
-      )
+        () => {}
+      );
     },
     async userIdCheck({ commit }, id) {
       await userIdCheck(
         id,
         (response) => {
           if (response.data.message === "success") {
-            commit("SET_IS_ID_DUPLICATION", false)
+            commit("SET_IS_ID_DUPLICATION", false);
           } else {
-            commit("SET_IS_ID_DUPLICATION", true)
+            commit("SET_IS_ID_DUPLICATION", true);
           }
         },
-        () => { }
-      )
+        () => {}
+      );
     },
     userLogout({ commit }) {
       commit("SET_IS_LOGOUT", true);
@@ -93,8 +102,8 @@ const userStore = {
             commit("SET_USER_INFO", response.data.userInfo);
           }
         },
-        () => { },
-      )
+        () => {}
+      );
     },
     userDelete({ commit }, id) {
       userRemove(
@@ -105,43 +114,44 @@ const userStore = {
             localStorage.removeItem("access-token");
           }
         },
-        () => { },
-      )
+        () => {}
+      );
     },
     async bookmarkList({ commit }, id) {
       await bookmarkList(
         id,
         (response) => {
-          commit("SET_BOOKMARK_LIST", response.data.bookmarks)
+          commit("SET_BOOKMARK_LIST", response.data.bookmarks);
         },
-        () => { },
-      )
+        () => {}
+      );
     },
-    async bookmarkAdd({ commit }, bookmark) {
+    async bookmarkAdd({ commit, dispatch }, bookmark) {
       await bookmarkAdd(
         bookmark,
         () => {
-          commit,
-            console.log("북마크 추가");
+          commit, console.log("북마크 추가");
+          dispatch("bookmarkList", bookmark.userId);
         },
-        () => { },
-      )
+        () => {}
+      );
     },
-    async bookmarkDelete({ commit }, bookmark) {
+    async bookmarkDelete({ commit, dispatch }, bookmark) {
+      console.log("bookmarkDelete called");
       await bookmarkRemove(
         bookmark,
         () => {
-          commit,
-            console.log("북마크 삭제");
+          commit, console.log("북마크 삭제");
+          dispatch("bookmarkList", bookmark.userId);
         },
-        () => { },
-      )
+        () => {}
+      );
     },
 
     initializeState({ commit }) {
       commit("SET_IS_LOGIN_ERROR", false);
       commit("SET_IS_ID_DUPLICATION", false);
-    }
+    },
   },
 };
 

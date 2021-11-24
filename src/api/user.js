@@ -16,7 +16,10 @@ async function userIdCheck(id, success, fail) {
 
 async function userModify(user, success, fail) {
   api.defaults.headers["access-token"] = localStorage.getItem("access-token");
-  api.put(`/user/${user.userId}`, JSON.stringify(user)).then(success).catch(fail);
+  api
+    .put(`/user/${user.userId}`, JSON.stringify(user))
+    .then(success)
+    .catch(fail);
 }
 
 function userRemove(id, success, fail) {
@@ -31,12 +34,32 @@ async function bookmarkList(id, success, fail) {
 
 async function bookmarkAdd(bookmark, success, fail) {
   api.defaults.headers["access-token"] = localStorage.getItem("access-token");
-  await api.get(`/user/${bookmark.userId}/bookmark`, JSON.stringify(bookmark)).then(success).catch(fail);
+  await api
+    .post(`/user/${bookmark.userId}/bookmark`, JSON.stringify(bookmark))
+    .then(success)
+    .catch(fail);
 }
 
 async function bookmarkRemove(bookmark, success, fail) {
+  console.log("bookmarkRemove called");
+  console.log(bookmark);
   api.defaults.headers["access-token"] = localStorage.getItem("access-token");
-  await api.get(`/user/${bookmark.userId}/bookmark`, JSON.stringify(bookmark)).then(success).catch(fail);
+  await api
+    .delete(`/user/${bookmark.userId}/bookmark`, JSON.stringify(bookmark))
+    .then(success)
+    .catch((data) => {
+      console.log(data);
+      fail;
+    });
 }
 
-export { userLogin, userJoin, userIdCheck, userModify, userRemove, bookmarkList, bookmarkAdd, bookmarkRemove };
+export {
+  userLogin,
+  userJoin,
+  userIdCheck,
+  userModify,
+  userRemove,
+  bookmarkList,
+  bookmarkAdd,
+  bookmarkRemove,
+};

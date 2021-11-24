@@ -6,4 +6,8 @@ async function houseList(dongCode, success, fail) {
   return api.get(`housedeal/apts/dongs/${dongCode}`).then(success).catch(fail);
 }
 
-export { houseList };
+async function houseDealList(aptCode, success, fail) {
+  return api.get(`housedeal/apts/${aptCode}`).then(success).catch(fail);
+}
+
+export { houseList, houseDealList };
