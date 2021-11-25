@@ -41,11 +41,9 @@ async function bookmarkAdd(bookmark, success, fail) {
 }
 
 async function bookmarkRemove(bookmark, success, fail) {
-  console.log("bookmarkRemove called");
-  console.log(bookmark);
   api.defaults.headers["access-token"] = localStorage.getItem("access-token");
   await api
-    .delete(`/user/${bookmark.userId}/bookmark`, JSON.stringify(bookmark))
+    .delete(`/user/${bookmark.userId}/bookmark/${bookmark.bookmarkId}`)
     .then(success)
     .catch((data) => {
       console.log(data);

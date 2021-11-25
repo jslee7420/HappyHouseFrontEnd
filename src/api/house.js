@@ -10,4 +10,8 @@ async function houseDealList(aptCode, success, fail) {
   return api.get(`housedeal/apts/${aptCode}`).then(success).catch(fail);
 }
 
-export { houseList, houseDealList };
+async function bookmarkedHouseList(userId, success, fail) {
+  return api.get(`housedeal/users/${userId}/apts`).then(success).catch(fail);
+}
+
+export { houseList, houseDealList, bookmarkedHouseList };

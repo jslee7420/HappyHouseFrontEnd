@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 text-left">
+  <div class="p-3 text-left list">
     <!-- 닫기 버튼 -->
     <p class="text-right">
       <router-link :to="{ name: 'HouseList' }"
@@ -7,8 +7,22 @@
       ></router-link>
     </p>
 
+    <house-list-row
+      class="mb-3"
+      :aptCode="houseInfo.aptCode"
+      :aptName="houseInfo.aptName"
+      :dongName="houseInfo.dongName"
+      :sidoName="houseInfo.sidoName"
+      :gugunName="houseInfo.gugunName"
+      :buildYear="houseInfo.buildYear"
+      :jibun="houseInfo.jibun"
+      :recentPrice="houseInfo.recentPrice"
+      :isDetail="true"
+    />
+
     <!-- 차트 -->
-    <line-chart></line-chart>
+    <house-deal-amount-chart></house-deal-amount-chart>
+    <br />
 
     <!-- 거래내역 -->
     <h4 class="font-weight-bold">거래내역</h4>
@@ -34,12 +48,14 @@
 
 <script>
 import { mapState } from "vuex";
-import LineChart from "@/components/charts/LineChart.vue";
+import HouseListRow from "@/components/house/HouseListRow.vue";
+import HouseDealAmountChart from "@/components/charts/HouseDealAmountChart.vue";
 
 const houseStore = "houseStore";
 export default {
   components: {
-    LineChart,
+    HouseListRow,
+    HouseDealAmountChart,
   },
   data() {
     return {
@@ -54,7 +70,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["houseDeals"]),
+    ...mapState(houseStore, ["houseDeals", "houseInfo"]),
   },
   methods: {
     closeDetail() {
@@ -69,4 +85,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.list {
+  height: calc(100vh - 110px);
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+</style>

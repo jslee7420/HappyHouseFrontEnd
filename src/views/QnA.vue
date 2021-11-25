@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-5">
     <b-jumbotron header="Q&A" lead="" bg-variant="info"> </b-jumbotron>
     <router-view></router-view>
   </div>

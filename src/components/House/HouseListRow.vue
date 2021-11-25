@@ -1,6 +1,9 @@
 <template>
   <div>
-    <b-list-group-item class="overflow-hidden" @click="showDetail">
+    <b-list-group-item
+      class="overflow-hidden"
+      v-on="{ click: isDetail ? () => {} : showDetail }"
+    >
       <b-row no-gutters>
         <b-col md="4" class="d-flex justify-content-center align-items-center">
           <div class="img-container">
@@ -51,6 +54,12 @@ export default {
     buildYear: Number,
     jibun: String,
     recentPrice: String,
+    isDetail: Boolean,
+  },
+  data() {
+    return {
+      bookmarkInfo: null,
+    };
   },
   computed: {
     ...mapState(houseStore, ["isList"]),
@@ -67,8 +76,11 @@ export default {
     },
     isBookmarked() {
       if (this.$store.state.userStore.bookmakrList !== null) {
-        for (let house of this.$store.state.userStore.bookmakrList) {
-          if (house.aptCode == this.aptCode) return true;
+        for (let bookmark of this.$store.state.userStore.bookmakrList) {
+          if (bookmark.aptCode == this.aptCode) {
+            this.insertBookmarkInfo(bookmark);
+            return true;
+          }
         }
       }
       return false;
@@ -76,6 +88,16 @@ export default {
   },
   methods: {
     showDetail() {
+      this.$store.dispatch("houseStore/setHouseInfo", {
+        aptCode: this.aptCode,
+        aptName: this.aptName,
+        dongName: this.dongName,
+        sidoName: this.sidoName,
+        gugunName: this.gugunName,
+        buildYear: this.buildYear,
+        jibun: this.jibun,
+        recentPrice: this.recentPrice,
+      });
       this.$store
         .dispatch("houseStore/getHouseDeals", this.aptCode)
         .then(() => {
@@ -90,12 +112,10 @@ export default {
       this.$store.dispatch("userStore/bookmarkAdd", bookMark);
     },
     removeFromBookmark() {
-      let bookMark = {
-        userId: this.$store.getters["userStore/checkUserInfo"].userId,
-        aptCode: this.aptCode,
-      };
-      console.log("bookMark:", bookMark);
-      this.$store.dispatch("userStore/bookmarkDelete", bookMark);
+      this.$store.dispatch("userStore/bookmarkDelete", this.bookmarkInfo);
+    },
+    insertBookmarkInfo(bookmark) {
+      this.bookmarkInfo = bookmark;
     },
   },
 };

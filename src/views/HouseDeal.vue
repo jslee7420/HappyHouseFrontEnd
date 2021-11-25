@@ -21,6 +21,9 @@ export default {
     FilterBar,
     MapComp,
   },
+  created() {
+    this.$store.dispatch("houseStore/resetHouses");
+  },
 };
 </script>
 
