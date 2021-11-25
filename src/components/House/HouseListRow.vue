@@ -101,6 +101,7 @@ export default {
         buildYear: this.buildYear,
         jibun: this.jibun,
         recentPrice: this.recentPrice,
+        pricePerPyeong: this.pricePerPyeong,
       });
       this.$store
         .dispatch("houseStore/getHouseDeals", this.aptCode)

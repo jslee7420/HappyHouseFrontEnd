@@ -185,6 +185,7 @@ export default {
           });
           // 마커에 click 이벤트를 등록합니다
           kakao.maps.event.addListener(marker, "click", () => {
+            this.$store.dispatch("houseStore/setHouseInfo", houses[i]);
             this.$store
               .dispatch("houseStore/getHouseDeals", houses[i].aptCode)
               .then(() => {

@@ -24,6 +24,7 @@
       :jibun="houseInfo.jibun"
       :recentPrice="houseInfo.recentPrice"
       :isDetail="true"
+      :pricePerPyeong="houseInfo.pricePerPyeong"
     />
     <!-- 거래내역 -->
     <h4 class="font-weight-bold">거래내역</h4>
