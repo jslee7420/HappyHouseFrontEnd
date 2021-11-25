@@ -12,7 +12,7 @@
       ></router-link>
     </p>
 
-    <!--  -->
+    <!-- 주택 단지 정보 -->
     <house-list-row
       class="mb-3"
       :aptCode="houseInfo.aptCode"
@@ -28,6 +28,7 @@
 
     <!-- 거래내역 -->
     <h4 class="font-weight-bold">거래내역</h4>
+
     <b-table striped hover :items="houseDeals" :fields="fields">
       <!-- A virtual column -->
       <template #cell(index)="data">
