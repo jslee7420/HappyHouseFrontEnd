@@ -5,6 +5,8 @@ import Home from "@/views/Home.vue";
 
 import Bookmark from "@/views/Bookmark.vue";
 
+import DealTrend from "@/views/DealTrend.vue"
+
 import House from "@/views/HouseDeal.vue";
 import HouseList from "@/components/house/HouseList.vue";
 import HouseDetail from "@/components/house/HouseDetail.vue";
@@ -112,6 +114,11 @@ const routes = [
         component: HouseDetail,
       },
     ],
+  },
+  {
+    path: "dealtrend",
+    name: "DealTrend",
+    component: DealTrend
   },
 ];
 

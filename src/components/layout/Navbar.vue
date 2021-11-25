@@ -34,6 +34,9 @@
 
             <b-nav-item :to="{ name: 'Home' }">Home</b-nav-item>
             <b-nav-item :to="{ name: 'House' }">실거래가 조회</b-nav-item>
+            <b-nav-item :to="{ name: 'DealTrend' }"
+              >지역 별 거래 동향</b-nav-item
+            >
             <b-nav-item href="#">공지사항</b-nav-item>
             <b-nav-item :to="{ name: 'QuestionList' }">Q&A</b-nav-item>
             <b-nav-item

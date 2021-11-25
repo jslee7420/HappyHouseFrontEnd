@@ -9,6 +9,7 @@ import userStore from "@/store/modules/userStore.js";
 import addressStore from "@/store/modules/addressStore.js";
 import houseStore from "@/store/modules/houseStore.js";
 import newsStore from "@/store/modules/newsStore.js";
+import dealTrendStore from "@/store/modules/dealTrendStore.js";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     addressStore,
     houseStore,
     newsStore,
+    dealTrendStore,
   },
   state: {
     questions: [],

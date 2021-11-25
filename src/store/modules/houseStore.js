@@ -27,6 +27,7 @@ const houseStore = {
         options.dongCode,
         options.buildYear,
         (data) => {
+          console.log(data.data);
           commit("SET_HOUSE_LIST", data.data);
         },
         (error) => {
