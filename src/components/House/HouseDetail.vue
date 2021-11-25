@@ -7,6 +7,9 @@
       ></router-link>
     </p>
 
+    <!-- 차트 -->
+    <line-chart></line-chart>
+
     <!-- 거래내역 -->
     <h4 class="font-weight-bold">거래내역</h4>
     <b-table striped hover :items="houseDeals" :fields="fields">
@@ -31,9 +34,13 @@
 
 <script>
 import { mapState } from "vuex";
+import LineChart from "@/components/charts/LineChart.vue";
 
 const houseStore = "houseStore";
 export default {
+  components: {
+    LineChart,
+  },
   data() {
     return {
       a: this.$store.state.houseStore.isList,

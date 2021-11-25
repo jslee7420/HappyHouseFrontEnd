@@ -66,8 +66,10 @@ export default {
       else return `${hundredMillion}억 ${thousand}천`;
     },
     isBookmarked() {
-      for (let house of this.$store.state.userStore.bookmakrList) {
-        if (house.aptCode == this.aptCode) return true;
+      if (this.$store.state.userStore.bookmakrList !== null) {
+        for (let house of this.$store.state.userStore.bookmakrList) {
+          if (house.aptCode == this.aptCode) return true;
+        }
       }
       return false;
     },
@@ -92,7 +94,7 @@ export default {
         userId: this.$store.getters["userStore/checkUserInfo"].userId,
         aptCode: this.aptCode,
       };
-      console.log("bookmark:", bookMark);
+      console.log("bookMark:", bookMark);
       this.$store.dispatch("userStore/bookmarkDelete", bookMark);
     },
   },
