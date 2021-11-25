@@ -32,7 +32,10 @@
           최근 거래가: <span class="h5 font-weight-bold">{{ price }}</span
           ><br />
 
-          <span>{{ address }}<br />건축년도: {{ buildYear }} </span>
+          <span
+            >{{ address }}<br />건축년도: {{ buildYear }}<br />
+            평당가: {{ pricePerPyeong }}만원
+          </span>
         </b-col>
       </b-row>
     </b-list-group-item>
@@ -55,6 +58,7 @@ export default {
     jibun: String,
     recentPrice: String,
     isDetail: Boolean,
+    pricePerPyeong: Number,
   },
   data() {
     return {
