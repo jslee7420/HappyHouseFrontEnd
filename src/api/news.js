@@ -2,9 +2,11 @@ import { newsInstance } from "./index.js";
 
 const api = newsInstance();
 
-async function newsList(dongCode, success, fail) {
+async function newsList(query, success, fail) {
   return api
-    .get(`	https://openapi.naver.com/v1/search/news.json`)
+    .get(
+      `https://openapi.naver.com/v1/search/news.xml?query=${query}&display=${5}&start=1&sort=sim`
+    )
     .then(success)
     .catch(fail);
 }

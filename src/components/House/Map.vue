@@ -103,25 +103,20 @@ export default {
 
       this.map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-      const markerPosition = new kakao.maps.LatLng(
-        37.50133446272347,
-        127.03967579316388
-      );
-
-      // 마커 객체 생성
-      const marker = new kakao.maps.Marker({
-        position: markerPosition,
-      });
-
-      this.markers = [marker];
-
-      marker.setMap(this.map); // 지도에 마커 표시
-
       //카테고리별 장소 검색
       this.initCaregoricalSearch();
 
       // 지도 컨트롤 추가
       this.initMapControll();
+    },
+
+    // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+    removeMarkers() {
+      console.log(this.markers);
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+      this.markers = [];
     },
 
     initMapControll() {
@@ -169,12 +164,10 @@ export default {
     // 지도에 마커 표시
     displayMarker(houses) {
       console.log("displayMarker Method called");
-
       if (this.markers.length > 0) {
         // 기존 마커 맵에서 삭제
         this.markers.forEach((marker) => marker.setMap(null));
       }
-      houses;
 
       if (houses.length > 0) {
         // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
@@ -199,6 +192,7 @@ export default {
                   this.$router.push({ name: "HouseDetail" });
               });
           });
+          this.markers.push(marker);
         }
 
         // LatLngBounds 객체에 좌표를 추가합니다

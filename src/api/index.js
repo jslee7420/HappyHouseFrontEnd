@@ -27,6 +27,8 @@ function newsInstance() {
     baseURL: NEWS_URL,
     headers: {
       "Content-type": "application/json",
+      "X-Naver-Client-Id": "FXMLxjrg9foxOlYYdtf6",
+      "X-Naver-Client-Secret": "FXMLxjrg9foxOlYYdtf6",
     },
   });
   return instance;

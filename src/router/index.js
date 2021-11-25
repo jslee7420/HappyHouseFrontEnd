@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import QnA from "@/views/QnA.vue";
 import Home from "@/views/Home.vue";
 
+import Bookmark from "@/views/Bookmark.vue";
+
 import House from "@/views/HouseDeal.vue";
 import HouseList from "@/components/house/HouseList.vue";
 import HouseDetail from "@/components/house/HouseDetail.vue";
@@ -89,6 +91,24 @@ const routes = [
       {
         path: "detail",
         name: "HouseDetail",
+        component: HouseDetail,
+      },
+    ],
+  },
+  {
+    path: "/bookmark",
+    name: "Bookmark",
+    component: Bookmark,
+    redirect: "/Bookmark/list",
+    children: [
+      {
+        path: "list",
+        name: "BookmarkList",
+        component: HouseList,
+      },
+      {
+        path: "detail",
+        name: "BookmarkDetail",
         component: HouseDetail,
       },
     ],

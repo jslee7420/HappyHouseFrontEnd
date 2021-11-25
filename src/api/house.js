@@ -2,8 +2,11 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-async function houseList(dongCode, success, fail) {
-  return api.get(`housedeal/apts/dongs/${dongCode}`).then(success).catch(fail);
+async function houseList(dongCode, buildYear, success, fail) {
+  return api
+    .get(`housedeal/apts/dongs/${dongCode}?buildYear=${buildYear}`)
+    .then(success)
+    .catch(fail);
 }
 
 async function houseDealList(aptCode, success, fail) {

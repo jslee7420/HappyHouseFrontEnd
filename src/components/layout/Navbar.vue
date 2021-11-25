@@ -36,10 +36,16 @@
             <b-nav-item :to="{ name: 'House' }">실거래가 조회</b-nav-item>
             <b-nav-item href="#">공지사항</b-nav-item>
             <b-nav-item :to="{ name: 'QuestionList' }">Q&A</b-nav-item>
-
+            <b-nav-item
+              v-if="isLogin"
+              :to="{ name: 'Bookmark' }"
+              @click="showBookmarkedHouses"
+              >관심 단지</b-nav-item
+            >
             <b-nav-item v-if="!isLogin" :to="{ name: 'UserLogin' }"
               >로그인</b-nav-item
             >
+
             <b-nav-item v-else :to="{ name: 'UserProfile' }"
               >마이 페이지</b-nav-item
             >
@@ -65,6 +71,16 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ["userLogout"]),
+    showBookmarkedHouses() {
+      this.$store
+        .dispatch(
+          "houseStore/getBookmarkedHouses",
+          this.$store.getters["userStore/checkUserInfo"].userId
+        )
+        .then(() => {
+          this.$root.$emit("updateMap");
+        });
+    },
   },
 };
 </script>

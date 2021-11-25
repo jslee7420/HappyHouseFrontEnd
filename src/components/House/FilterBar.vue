@@ -19,11 +19,14 @@
         :options="dongs"
       ></b-form-select>
 
+      <b-form-select
+        class="mb-2 mr-sm-2 mb-sm-0"
+        v-model="buildYearOption"
+        :options="options"
+      ></b-form-select>
+
       <b-button type="submit" variant="primary" class="mb-2 mr-sm-2 mb-sm-0"
         >조회</b-button
-      >
-      <b-button @click="showBookmarkedHouses" class="mb-2 mr-sm-2 mb-sm-0"
-        >관심단지 모아보기</b-button
       >
     </b-form>
   </div>
@@ -41,13 +44,24 @@ export default {
       sidoCode: null,
       gugunCode: null,
       dongCode: null,
+      buildYearOption: 0,
+      options: [
+        { text: "건축년도", value: 0 },
+        { text: "신축", value: 1 },
+        { text: "구축", value: 2 },
+      ],
     };
   },
   computed: {
     ...mapState(addressStore, ["sidos", "guguns", "dongs"]),
   },
   created() {
-    this.getSido();
+    if (this.$route.path === "/house/list") {
+      this.dongCode = 1168010100;
+      this.onSubmit();
+      this.dongCode = null;
+      this.getSido();
+    }
   },
   methods: {
     ...mapActions(addressStore, ["getSido", "getGugun", "getDong"]),
@@ -62,25 +76,21 @@ export default {
         this.getDong({ sidoCode: this.sidoCode, gugunCode: this.gugunCode });
     },
     onSubmit() {
-      if (this.dongCode)
-        this.$store.dispatch("houseStore/getHouses", this.dongCode).then(() => {
-          this.$root.$emit("updateMap");
-          if (this.$router.currentRoute.name !== "HouseList")
-            this.$router.push({ name: "HouseList" });
-        });
-    },
-    showBookmarkedHouses() {
-      this.$store
-        .dispatch(
-          "houseStore/getBookmarkedHouses",
-          this.$store.getters["userStore/checkUserInfo"].userId
-        )
-        .then(() => {
-          this.$root.$emit("updateMap");
-        });
+      if (this.dongCode) {
+        this.$store
+          .dispatch("houseStore/getHouses", {
+            dongCode: this.dongCode,
+            buildYear: this.buildYearOption,
+          })
+          .then(() => {
+            this.$root.$emit("updateMap");
+            if (this.$router.currentRoute.name !== "HouseList")
+              this.$router.push({ name: "HouseList" });
+          });
+      }
     },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
