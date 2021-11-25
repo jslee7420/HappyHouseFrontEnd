@@ -8,7 +8,7 @@
     >
       <div class="container">
         <b-navbar-brand :to="{ name: 'Home' }" class="logo"
-          >Happy House</b-navbar-brand
+          ><b-icon-house-fill />Happy House</b-navbar-brand
         >
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -40,22 +40,31 @@
             <b-nav-item href="#">공지사항</b-nav-item>
             <b-nav-item :to="{ name: 'QuestionList' }">Q&A</b-nav-item>
             <b-nav-item
+              class="nav_item"
               v-if="isLogin"
               :to="{ name: 'Bookmark' }"
               @click="showBookmarkedHouses"
               >관심 단지</b-nav-item
             >
-            <b-nav-item v-if="!isLogin" :to="{ name: 'UserLogin' }"
+            <b-nav-item
+              class="nav_item"
+              v-if="!isLogin"
+              :to="{ name: 'UserLogin' }"
               >로그인</b-nav-item
             >
 
-            <b-nav-item v-else :to="{ name: 'UserProfile' }"
+            <b-nav-item class="nav_item" v-else :to="{ name: 'UserProfile' }"
               >마이 페이지</b-nav-item
             >
-            <b-nav-item v-if="!isLogin" :to="{ name: 'UserJoin' }"
+            <b-nav-item
+              class="nav_item"
+              v-if="!isLogin"
+              :to="{ name: 'UserJoin' }"
               >회원가입</b-nav-item
             >
-            <b-nav-item v-else @click="userLogout">로그아웃</b-nav-item>
+            <b-nav-item class="nav_item" v-else @click="userLogout"
+              >로그아웃</b-nav-item
+            >
           </b-navbar-nav>
         </b-collapse>
       </div>
@@ -91,6 +100,9 @@ export default {
 <style scoped>
 .logo {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 25px;
+}
+.nav_item {
+  font-weight: bold;
 }
 </style>

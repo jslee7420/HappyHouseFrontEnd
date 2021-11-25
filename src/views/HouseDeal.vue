@@ -26,7 +26,7 @@ export default {
 
 <style scoped>
 .side {
-  width: 400px;
+  width: 430px;
 }
 .map {
   flex: 1;
