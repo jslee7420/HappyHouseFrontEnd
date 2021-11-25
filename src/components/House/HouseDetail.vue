@@ -2,7 +2,12 @@
   <div class="p-3 text-left list">
     <!-- 닫기 버튼 -->
     <p class="text-right">
-      <router-link :to="{ name: 'HouseList' }"
+      <router-link
+        v-if="this.$route.name === 'HouseDetail'"
+        :to="{ name: 'HouseList' }"
+        ><b-icon-x font-scale="2"></b-icon-x
+      ></router-link>
+      <router-link v-else :to="{ name: 'BookmarkList' }"
         ><b-icon-x font-scale="2"></b-icon-x
       ></router-link>
     </p>

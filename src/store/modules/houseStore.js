@@ -22,9 +22,10 @@ const houseStore = {
     },
   },
   actions: {
-    getHouses({ commit }, dongCode) {
+    getHouses({ commit }, options) {
       return houseList(
-        dongCode,
+        options.dongCode,
+        options.buildYear,
         (data) => {
           commit("SET_HOUSE_LIST", data.data);
         },

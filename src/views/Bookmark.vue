@@ -1,7 +1,7 @@
 <template>
   <div class="housedeal">
-    <filter-bar></filter-bar>
-    <div class="d-flex">
+    <filter-bar class="doNotShow"></filter-bar>
+    <div class="d-flex border-top">
       <div class="side border-right item">
         <router-view />
       </div>
@@ -21,6 +21,9 @@ export default {
     FilterBar,
     MapComp,
   },
+  created() {
+    this.$store.dispatch("houseStore/resetHouses");
+  },
 };
 </script>
 
@@ -30,5 +33,8 @@ export default {
 }
 .map {
   flex: 1;
+}
+.doNotShow {
+  visibility: hidden;
 }
 </style>

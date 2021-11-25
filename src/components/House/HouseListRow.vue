@@ -101,7 +101,9 @@ export default {
       this.$store
         .dispatch("houseStore/getHouseDeals", this.aptCode)
         .then(() => {
-          this.$router.push({ name: "HouseDetail" });
+          if (this.$route.name === "HouseList")
+            this.$router.push({ name: "HouseDetail" });
+          else this.$router.push({ name: "BookmarkDetail" });
         });
     },
     addToBookmark() {

@@ -12,6 +12,7 @@ const newsStore = {
   },
   actions: {
     getNews({ commit }) {
+      console.log("getNews method called");
       return newsList(
         "부동산",
         (data) => {
